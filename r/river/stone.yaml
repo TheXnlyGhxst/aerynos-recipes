@@ -1,0 +1,63 @@
+#
+# SPDX-FileCopyrightText: © 2025- AerynOS Developers
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+name        : river
+version     : "0.3.12"
+release     : 1
+homepage    : https://isaacfreund.com/software/river/
+upstreams   :
+    - https://codeberg.org/river/river/archive/v0.3.12.tar.gz :
+        hash: 7403630a6c9811d5cf8c7d72731d2e358f447236b8dcf9685be7ac049eae2567
+        rename: river
+summary     : A non-monolithic Wayland compositor https://isaacfreund.com/software/river
+description : |
+  River is a non-monolithic Wayland compositor. Unlike other Wayland compositors, river does not combine the compositor and window manager into one program. Instead, users can choose any window manager implementing the river-window-management-v1 protocol
+license     : 
+  - CC-BY-SA-4.0
+  - GPL-3.0-or-later
+  - MIT
+networking  : true
+builddeps   :
+  - binary(scdoc)
+  - binary(zig)
+  - pkgconfig(libevdev)
+  - pkgconfig(wayland-protocols)
+  - pkgconfig(wayland-scanner)
+  - pkgconfig(wlroots)
+rundeps     :
+  - binary(foot) # Ensure at least one terminal is installed
+build       : |
+  zig build -Doptimize=ReleaseSafe -Dxwayland
+install     : |
+  %install_bin zig-out/bin/river
+  %install_bin zig-out/bin/riverctl
+  %install_bin zig-out/bin/rivertile
+
+  %install_file contrib/river.desktop %(installroot)%(datadir)/wayland-sessions/river.desktop
+
+  %install_dir %(installroot)%(vendordir)/%(name)
+  %install_file example/init %(installroot)%(vendordir)/%(name)/init
+
+  %install_dir %(installroot)%(datadir)/licenses/%(name)
+  %install_file LICENSE %(installroot)%(datadir)/licenses/%(name)/LICENSE
+
+  %install_file zig-out/share/bash-completion/completions/riverctl %(installroot)%(datadir)/bash-completion/completions/riverctl
+
+  %install_dir %(installroot)%(datadir)/man/man1
+  %install_file zig-out/share/man/man1/* %(installroot)%(datadir)/man/man1/.
+
+  %install_dir %(installroot)%(datadir)/%(name)-protocols
+  %install_file zig-out/share/river-protocols/river-layout-v3.xml %(installroot)%(datadir)/%(name)-protocols/river-layout-v3.xml
+
+  %install_file zig-out/share/fish/vendor_completions.d/riverctl.fish %(installroot)%(datadir)/fish/vendor_completions.d/riverctl.fish
+
+  %install_file zig-out/share/pkgconfig/river-protocols.pc %(installroot)%(datadir)/pkgconfig/river-protocols.pc
+
+  %install_file zig-out/share/zsh/site-functions/_riverctl %(installroot)%(datadir)/zsh/site-functions/_riverctl
+
+packages    :
+  - "%(name)-devel":
+      paths:
+        - /usr/share/pkgconfig/river-protocols.pc
