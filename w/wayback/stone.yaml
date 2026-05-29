@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: 2026 AerynOS Developers
+# SPDX-License-Identifier: MPL-2.0
+
+name        : wayback
+version     : "0.3"
+release     : 1
+homepage    : https://gitlab.freedesktop.org/wayback/wayback
+upstreams   :
+    - https://gitlab.freedesktop.org/wayback/wayback/-/archive/0.3/wayback-0.3.tar.gz : e23f1a77d00db14af0f4fd11bc046e2193f4aeb851832173a5062676ac901e8a
+summary     : X11 compatibility layer leveraging wlroots and Xwayland
+description : |
+    Wayback is a X11 compatibility layer which allows for running full X11
+    desktop environments using Wayland components.  It is essentially
+    a stub compositor which provides just enough Wayland capabilities to host
+    a rootful Xwayland server.
+license     : 
+    - MIT
+builddeps   :
+    - pkgconfig(scdoc)
+    - pkgconfig(wayland-client)
+    - pkgconfig(wayland-cursor)
+    - pkgconfig(wayland-egl)
+    - pkgconfig(wayland-protocols)
+    - pkgconfig(wayland-server)
+    - pkgconfig(wlroots)
+    - pkgconfig(xkbcommon)
+    - pkgconfig(xwayland)
+setup       : |
+    %meson
+build       : |
+    %meson_build
+install     : |
+    %meson_install

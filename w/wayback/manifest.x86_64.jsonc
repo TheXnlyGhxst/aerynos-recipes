@@ -1,0 +1,42 @@
+/** Human readable report. This is not consumed by boulder */
+{
+	"manifest-version": "0.2",
+	"packages": {
+		"wayback": {
+			"build-depends": [
+				"pkgconfig(scdoc)",
+				"pkgconfig(wayland-client)",
+				"pkgconfig(wayland-cursor)",
+				"pkgconfig(wayland-egl)",
+				"pkgconfig(wayland-protocols)",
+				"pkgconfig(wayland-server)",
+				"pkgconfig(wlroots)",
+				"pkgconfig(xkbcommon)",
+				"pkgconfig(xwayland)"
+			],
+			"depends": [
+				"interpreter(/usr/lib/ld-linux-x86-64.so.2(x86_64))",
+				"soname(libc.so.6(x86_64))",
+				"soname(libwayland-client.so.0(x86_64))",
+				"soname(libwayland-server.so.0(x86_64))",
+				"soname(libwlroots-0.19.so(x86_64))",
+				"soname(libxkbcommon.so.0(x86_64))"
+			],
+			"files": [
+				"/usr/bin/Xwayback",
+				"/usr/bin/wayback-session",
+				"/usr/lib/wayback/wayback-compositor",
+				"/usr/share/man/man1/Xwayback.1",
+				"/usr/share/man/man1/wayback-session.1"
+			],
+			"name": "wayback",
+			"provides": [
+				"binary(Xwayback)",
+				"binary(wayback-session)"
+			]
+		}
+	},
+	"source-name": "wayback",
+	"source-release": "1",
+	"source-version": "0.3"
+}
